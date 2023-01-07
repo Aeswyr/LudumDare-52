@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class InputHandler : MonoBehaviour
 {
-    public float dir {
+    public Vector2 dir {
         get;
         private set;
     }
@@ -58,7 +58,7 @@ public class InputHandler : MonoBehaviour
     }
 
     public void Move(InputAction.CallbackContext ctx) {
-        this.dir = ctx.ReadValue<float>();
+        this.dir = ctx.ReadValue<Vector2>();
         this.buttons[0].Set(ctx);
     }
 
