@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2662682841228480675}
   - component: {fileID: 2502470993548453674}
   - component: {fileID: 801390704818276058}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Colisions
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -379,7 +379,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: db254f558879042e88b88bf9a76bc27e, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
