@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed = 0.1f;
-    [SerializeField] private float dashForce = 200.0f;
+    [SerializeField] private float dashForce = 125.0f;
+    private float dashDecay = 1;
     [SerializeField] private float jumpForce = 20.0f;
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private Rigidbody2D rbody;
@@ -33,10 +34,12 @@ public class PlayerController : MonoBehaviour
         if (dashFrames > 0)
         {
             dashFrames -= 1;
-            movement.x = dashForce / 2;
+            dashDecay += 1; 
+            movement.x = dashForce / dashDecay;
         }
         else
         {
+            dashDecay = 1;
             rbody.gravityScale = 7;
         }
 
