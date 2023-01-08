@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 12
-  dashForce: 200
+  dashForce: 125
   jumpForce: 20
   enemyPrefab: {fileID: 283304562530053409, guid: 09fa5acfdcee046cd839c3588be1aa17, type: 3}
   rbody: {fileID: 3467055507382020483}
