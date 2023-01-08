@@ -5,12 +5,14 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed = 0.1f;
+    [SerializeField] private float dashForce = 200.0f;
     [SerializeField] private float jumpForce = 20.0f;
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private Rigidbody2D rbody;
     [SerializeField] private GroundedCheck gcheck;
     [SerializeField] SpriteRenderer sprite = null;
-    [SerializeField] private InputHandler input; 
+    [SerializeField] private InputHandler input;
+    int dashFrames;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,8 +22,27 @@ public class PlayerController : MonoBehaviour
     // Update is called once per RENDER frame
     void FixedUpdate() //why is this not defaulted
     {
-        bool grounded = gcheck.CheckGrounded();
         Vector2 movement = new Vector2(speed * input.dir.x, rbody.velocity.y);
+        if (input.dodge.pressed)
+        {
+            rbody.gravityScale = 0;
+            movement.x = dashForce;
+            dashFrames = 10;
+        }
+
+        if (dashFrames > 0)
+        {
+            dashFrames -= 1;
+            movement.x = dashForce / 2;
+        }
+        else
+        {
+            rbody.gravityScale = 7;
+        }
+
+
+        bool grounded = gcheck.CheckGrounded();
+
         if (grounded && this.input.jump.pressed)
         {
             movement.y = jumpForce;
@@ -34,5 +55,9 @@ public class PlayerController : MonoBehaviour
 
         if (input.primary.pressed)
             Instantiate(enemyPrefab, transform.position + 5 * Vector3.right, Quaternion.identity);
+
+
+
     }
 }
+
