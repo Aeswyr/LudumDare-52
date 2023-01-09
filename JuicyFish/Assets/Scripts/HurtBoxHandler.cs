@@ -6,8 +6,8 @@ public class HurtBoxHandler : MonoBehaviour
 {
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("I am hurt.");
-        Destroy(collision.transform.parent.gameObject);
+        Destroy(transform.parent.gameObject);
+        Debug.Log("I was collided with: HURTBOX LAYER");
     }
 
     private void OnCollisionExit2D(Collision2D collision)

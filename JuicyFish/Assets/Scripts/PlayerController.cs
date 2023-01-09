@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     private float dashDecay = 1;
     [SerializeField] private float dashTimer = 100.0f;
     [SerializeField] private float jumpForce = 20.0f;
-    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private BoxCollider2D hitBox;
     [SerializeField] private Rigidbody2D rbody;
     [SerializeField] private GroundedCheck gcheck;
     [SerializeField] SpriteRenderer sprite = null;
@@ -37,8 +37,11 @@ public class PlayerController : MonoBehaviour
             movement.x = dashForce;
             dashFrames = 10;
             dashTimer = 0.0f;
+            
 
         }
+
+        
 
         if (dashFrames > 0)
         {
@@ -75,13 +78,7 @@ public class PlayerController : MonoBehaviour
             movement.y = jumpForce;
         }
         rbody.velocity = movement;
-
-
-
-        if (input.primary.pressed)
-            Instantiate(enemyPrefab, transform.position + 5 * Vector3.right, Quaternion.identity);
-
-
+        hitBox.enabled = Mathf.Abs(rbody.velocity.x) > speed ;
 
     }
 }
