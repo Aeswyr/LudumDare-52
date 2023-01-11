@@ -12,13 +12,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private BoxCollider2D hitBox;
     [SerializeField] private Rigidbody2D rbody;
     [SerializeField] private GroundedCheck gcheck;
-    [SerializeField] SpriteRenderer sprite = null;
+    [SerializeField] SpriteRenderer sprite;
     [SerializeField] private InputHandler input;
     int dashFrames;
     // Start is called before the first frame update
     void Start()
     {
-        sprite = this.GetComponent<SpriteRenderer>();
+
     }
 
     // Update is called once per RENDER frame
@@ -75,6 +75,7 @@ public class PlayerController : MonoBehaviour
 
         if (grounded && this.input.jump.pressed)
         {
+            Debug.Log("jumping");
             movement.y = jumpForce;
         }
         rbody.velocity = movement;

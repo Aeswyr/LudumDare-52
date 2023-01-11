@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class HitBoxHandler : MonoBehaviour
 {
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        // Destroy(collision.gameObject);
     }
 
     private void OnCollisionExit2D(Collision2D collision)

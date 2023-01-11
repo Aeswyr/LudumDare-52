@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class HurtBoxHandler : MonoBehaviour
-{
+{   [SerializeField] StatsController player;
+    void Start() 
+    {
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Destroy(transform.parent.gameObject);
-        Debug.Log("I was collided with: HURTBOX LAYER");
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -17,6 +18,8 @@ public class HurtBoxHandler : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        Debug.Log("ow plz stop");
+        EnemyStats enemy = collision.transform.parent.GetComponent<EnemyStats>();
+        float damage = enemy.attack ;
+        player.decrementHP(damage);
     }
 }
