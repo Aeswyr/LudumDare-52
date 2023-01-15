@@ -4,9 +4,20 @@ using UnityEngine;
 
 public class HitBoxHandler : MonoBehaviour
 {
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        // Destroy(collision.gameObject);
+    
+    [SerializeField] float pAttack;
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {   
+        Debug.Log("COLLIDED");
+        if (collision.gameObject.TryGetComponent(out HurtBoxHandler hurtbox))
+        {
+            if(hurtbox.owner.TryGetComponent(out HealthController health))
+            {
+                health.takeDamage(pAttack);
+            }
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
