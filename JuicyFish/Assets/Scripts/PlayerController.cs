@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,13 +12,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] SpriteRenderer sprite;
     [SerializeField] TrailRenderer trail;
     [SerializeField] private InputHandler input;
+    [SerializeField] private Animator animator;
+    [SerializeField] private GameObject dash_vfx;
 
     [Header("Stats")]
     [SerializeField] private float speed = 0.1f;
     [SerializeField] private float dashForce = 125.0f;
     [SerializeField] private float jumpForce = 20.0f;
 
-    [Header("Misc")]  
+    [Header("Misc")]
     [SerializeField] private float dashTimer = 100.0f;
     int dashFrames;
     private float dashDecay = 1;
@@ -35,7 +38,7 @@ public class PlayerController : MonoBehaviour
 
         //Set up initial movement 
         Vector2 movement = new Vector2(speed * input.dir.x, rbody.velocity.y);
-        
+
         //Dash Input (even though it says dodge)
         if (dashTimer == 100.0f && input.dodge.pressed)
         {
@@ -45,13 +48,15 @@ public class PlayerController : MonoBehaviour
             dashFrames = 10;
             dashTimer = 0.0f;
             trail.emitting = true;
+            //animation state for dash
+            animator.SetTrigger("dash");
         }
         //Lingering frames after intial dash (decay speed)
         if (dashFrames > 0)
         {
             movement.y = 0;
             dashFrames -= 1;
-            dashDecay += 1; 
+            dashDecay += 1;
             movement.x = dashForce / dashDecay;
         }
         else //Reset dash decay, turn gravity back on after dash ends
@@ -73,9 +78,10 @@ public class PlayerController : MonoBehaviour
         {
             dashForce = 125.0f;
         }
-            
+
         //Jump input
         bool grounded = gcheck.CheckGrounded();
+        animator.SetBool("grounded", grounded);
 
         if (grounded && this.input.jump.pressed)
         {
@@ -85,12 +91,22 @@ public class PlayerController : MonoBehaviour
 
         //Update velocity with movement
         rbody.velocity = movement;
+        animator.SetBool("moving", movement.x != 0);
+
+
+        //Attack input
+        if (input.primary.pressed)
+            animator.SetTrigger("attack");
     }
 
-    public void onDeath() {
+    public void onDeath()
+    {
         Debug.Log("DEDGE!");
     }
 
-
+    void onDash()
+    {
+        Instantiate(dash_vfx, transform.position, Quaternion.identity);
+    }
 }
 

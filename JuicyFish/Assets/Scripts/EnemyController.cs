@@ -17,4 +17,9 @@ public class EnemyController : MonoBehaviour
     {
 
     }
+
+    public void OnDeath()
+    {
+        Destroy(this.gameObject);
+    }
 }
